@@ -1,0 +1,7 @@
+spring-batch-tectalk-sample.iml
+.idea
+out
+target
+
+*.iml
+*.iml
