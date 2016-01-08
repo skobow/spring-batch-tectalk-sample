@@ -11,8 +11,6 @@
 
     <modules>
         <module>webshop-site</module>
-        <module>webshop-importer</module>
-        <module>webshop-importer</module>
         <module>webshop-data</module>
     </modules>
 
