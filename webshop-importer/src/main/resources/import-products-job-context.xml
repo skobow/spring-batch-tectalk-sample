@@ -7,16 +7,44 @@
        http://www.springframework.org/schema/batch/spring-batch.xsd">
 
     <job id="job" xmlns="http://www.springframework.org/schema/batch">
-        <step id="decompressFile">
+        <step id="decompressFile" next="readWriteProducts">
             <tasklet ref="decompressTasklet" />
         </step>
-        <!--<step id="importProducts">-->
-
-        <!--</step>-->
+        <step id="readWriteProducts">
+            <tasklet>
+                <chunk reader="reader" writer="writer"
+                       commit-interval="10" />
+            </tasklet>
+        </step>
     </job>
 
     <bean id="decompressTasklet"
-          class="de.netpioneer.webshop.importer.DecompressTasklet">
+          class="de.netpioneer.webshop.importer.DecompressTasklet" scope="step">
+        <property name="inputResource" value="#{jobParameters['inputResource']}" />
+        <property name="targetDirectory" value="#{jobParameters['targetDirectory']}" />
+        <property name="targetFile" value="#{jobParameters['targetFile']}" />
+    </bean>
 
+    <bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+        <property name="resource"
+                  value="file:#{jobParameters['targetDirectory']}#{jobParameters['targetFile']}" />
+        <property name="linesToSkip" value="1" />
+        <property name="lineMapper">
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+                <property name="lineTokenizer">
+                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+                        <property name="names" value="NAME,DESC,IMAGE_FILE,PRICE" />
+                    </bean>
+                </property>
+                <property name="fieldSetMapper">
+                    <bean class="de.netpioneer.webshop.importer.ProductFieldSetMapper" />
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="writer"
+          class="org.springframework.batch.item.database.HibernateItemWriter">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>

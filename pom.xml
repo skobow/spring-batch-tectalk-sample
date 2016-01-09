@@ -9,6 +9,11 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <spring.framework.version>4.2.1.RELEASE</spring.framework.version>
+        <hibernate.version>5.0.2.Final</hibernate.version>
+    </properties>
+
     <modules>
         <module>webshop-site</module>
         <module>webshop-data</module>
