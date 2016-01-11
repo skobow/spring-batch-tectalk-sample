@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:batch="http://www.springframework.org/schema/batch"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/batch
        http://www.springframework.org/schema/batch/spring-batch.xsd">
 
-    <job id="job" xmlns="http://www.springframework.org/schema/batch">
+    <job id="importProductsJob" xmlns="http://www.springframework.org/schema/batch">
         <step id="decompressFile" next="readWriteProducts">
             <tasklet ref="decompressTasklet" />
         </step>
@@ -33,7 +34,7 @@
             <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
                 <property name="lineTokenizer">
                     <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
-                        <property name="names" value="NAME,DESC,IMAGE_FILE,PRICE" />
+                        <property name="names" value="ID,NAME,DESC,IMAGE_FILE,PRICE" />
                     </bean>
                 </property>
                 <property name="fieldSetMapper">
@@ -43,8 +44,13 @@
         </property>
     </bean>
 
+    <!--<bean id="writer"-->
+          <!--class="org.springframework.batch.item.database.HibernateItemWriter">-->
+        <!--<property name="sessionFactory" ref="sessionFactory" />-->
+    <!--</bean>-->
+
     <bean id="writer"
-          class="org.springframework.batch.item.database.HibernateItemWriter">
-        <property name="sessionFactory" ref="sessionFactory" />
+          class="de.netpioneer.webshop.importer.ProductJdbcItemWriter">
+        <constructor-arg ref="dataSource" />
     </bean>
 </beans>

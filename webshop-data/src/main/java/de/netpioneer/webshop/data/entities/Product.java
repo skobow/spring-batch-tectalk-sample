@@ -30,14 +30,18 @@ public class Product {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "uid", nullable = false)
-    private String uid = UUID.randomUUID().toString();
+    @Column(name = "uid")
+    private String uid;
 
     @Column(name = "image_filename")
     private String imageFilename;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

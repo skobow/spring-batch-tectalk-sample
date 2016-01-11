@@ -17,6 +17,7 @@
     <modules>
         <module>webshop-site</module>
         <module>webshop-data</module>
+        <module>webshop-batch-admin</module>
     </modules>
 
 </project>

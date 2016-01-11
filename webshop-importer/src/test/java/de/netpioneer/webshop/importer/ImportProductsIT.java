@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -29,9 +31,10 @@ public class ImportProductsIT {
     @Test
     public void shouldImportProducts() throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
-                .addString("inputResource", "file:C:\\Entwicklung\\projects\\spring-batch-tectalk-sample\\data\\products.zip")
+                .addString("inputResource", "file:C:\\Entwicklung\\projects\\spring-batch-tectalk-sample\\data\\products_withId.zip")
                 .addString("targetDirectory", "./work/output/")
                 .addString("targetFile", "products.csv")
+//                .addDate("executionDate", new Date())
                 .toJobParameters();
 
         JobExecution execution = jobLauncher.run(job, jobParameters);
