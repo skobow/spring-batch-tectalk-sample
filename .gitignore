@@ -1,7 +1,9 @@
+/webshop-importer/work
 spring-batch-tectalk-sample.iml
 .idea
 out
 target
 
 *.iml
+/spring-batch-tectalk-sample.mwb
 *.iml

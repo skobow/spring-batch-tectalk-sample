@@ -7,27 +7,27 @@
 
     <!-- non-persistent job repository -->
 
-    <bean id="jobRepository"
-          class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
-        <property name="transactionManager" ref="transactionManager"/>
-    </bean>
+    <!--<bean id="jobRepository"-->
+          <!--class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">-->
+        <!--<property name="transactionManager" ref="transactionManager"/>-->
+    <!--</bean>-->
 
-    <bean id="transactionManager"
-          class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+    <!--<bean id="transactionManager"-->
+          <!--class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />-->
 
 
     <!-- persistent job repository -->
 
-    <!--<batch:job-repository id="jobRepository"-->
-                          <!--data-source="dataSource"-->
-                          <!--transaction-manager="transactionManager"-->
-                          <!--isolation-level-for-create="SERIALIZABLE"-->
-                          <!--table-prefix="BATCH_" />-->
+    <batch:job-repository id="jobRepository"
+                          data-source="dataSource"
+                          transaction-manager="transactionManager"
+                          isolation-level-for-create="SERIALIZABLE"
+                          table-prefix="BATCH_" />
 
-    <!--<bean id="transactionManager" lazy-init="true"-->
-          <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-    <!--</bean>-->
+    <bean id="transactionManager" lazy-init="true"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
     <bean id="jobLauncher"
           class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
